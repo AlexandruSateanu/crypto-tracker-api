@@ -1,5 +1,4 @@
 const fetch = require('node-fetch');
-const hmacSHA512 = require('crypto-js/hmac-sha256');
 
 /**
  * @param {object} config
@@ -13,24 +12,9 @@ const makeBinanceRequest = (config, endpoint, params = {}) => {
     };
 
     const binanceApi = config.BINANCE_API;
-    const binanceSecretKey = params.secretKey;
-    const timestamp = Date.now();
-    let binanceParams = {};
+    const searchParams = new URLSearchParams(params);
 
-    Object.assign(binanceParams, { timestamp });
-
-    if (binanceSecretKey) {
-        const queryString = Object.keys(binanceParams).map((key) => {
-            return `${key}=${binanceParams[key]}`;
-        }).join('&');
-
-        const signature = hmacSHA512(queryString, binanceSecretKey).toString();
-        Object.assign(binanceParams, { signature });
-    }
-
-    const signedParams = new URLSearchParams(binanceParams);
-
-    const url = binanceApi.API_DOMAIN + binanceApi.API_PREFIX + endpoint + "?" + signedParams;
+    const url = binanceApi.API_DOMAIN + binanceApi.API_PREFIX + endpoint + "?" + searchParams;
 
     return fetch(url, {
         headers: {
