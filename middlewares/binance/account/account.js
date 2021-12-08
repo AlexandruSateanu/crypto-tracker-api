@@ -3,7 +3,6 @@ const sendJsonResponse = require('../../../utils/sendJsonResponse');
 const makeBinanceRequest = require('../../../services/binance/makeBinanceRequest');
 
 const account = (req, res) => {
-    console.log(req.params);
     const params = {
         secretKey: req.query.secretKey,
         apiKey: req.query.apiKey
@@ -14,9 +13,8 @@ const account = (req, res) => {
             sendJsonResponse(res, 200, binanceResponse);
         })
         .catch(error => {
-            console.log(error);
             sendJsonResponse(res, 400, {
-                "error": "Invalid request to Binance"
+                "error": "Invalid request to Binance. Error: " + error
             });
         });
 };

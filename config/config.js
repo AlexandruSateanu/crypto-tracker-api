@@ -1,6 +1,6 @@
 const BINANCE_API = {
-    API_DOMAIN: process.env.BINANCE_API_DOMAIN,
-    API_PREFIX: process.env.BINANCE_API_PREFIX,
+    API_DOMAIN: "https://api.binance.com",
+    API_PREFIX: "/api/v3",
     ACCOUNT_INFORMATION: "account"
 };
 
